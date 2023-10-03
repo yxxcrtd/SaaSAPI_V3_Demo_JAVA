@@ -7,7 +7,7 @@
         <!-- %logger{参数}或者%c{参数} 表示 %c{1.} 省略前面包名保留类名 -->
         <property name="LOG_PATTERN" value="%date{yyyy-MM-dd HH:mm:ss.SSS} ${FILE_NAME} - [%thread] %-5level %c:%L - %msg%n"/>
         <!-- 定义日志存储的路径 -->
-        <property name="FILE_PATH" value="../logs"/>
+        <property name="FILE_PATH" value="./logs"/>
 
     </Properties>
 
