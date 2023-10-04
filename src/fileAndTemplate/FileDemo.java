@@ -43,11 +43,11 @@ public class FileDemo extends Exception {
 		int i = 0;
 		while (i < 3) {
 			EsignHttpResponse fileStatus = getFileStatus(fileId);
-			JsonObject fileStatusJsonObject = gson.fromJson(fileStatus.getBody(),
-					JsonObject.class);
+			JsonObject fileStatusJsonObject = gson.fromJson(fileStatus.getBody(), JsonObject.class);
 			String status = fileStatusJsonObject.getAsJsonObject("data").get("fileStatus").getAsString();
 			System.out.println(String.format("查询文件状态执行第%s次", i + 1));
-			if ("2".equalsIgnoreCase(status) || "5".equalsIgnoreCase(status)) {// 查询状态为2或者5代表文件准备完成
+			// 查询状态为2或者5代表文件准备完成
+			if ("2".equalsIgnoreCase(status) || "5".equalsIgnoreCase(status)) {
 				System.out.println("文件准备完成");
 				break;
 			}

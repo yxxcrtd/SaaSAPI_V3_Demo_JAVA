@@ -21,15 +21,15 @@ public class SignDemo {
 
     public static void main(String[] args) throws EsignDemoException {
         Gson gson = new Gson();
-        /* 发起签署*/
-        // EsignHttpResponse createByFile = createByFile();
-        // //JSONObject getPsnAuthUrlObject = JSONObject.parseObject(getPsnAuthUrl.getBody());
-        // JsonObject createByFileJsonObject = gson.fromJson(createByFile.getBody(), JsonObject.class);
-        // JsonObject createByFileData = createByFileJsonObject.getAsJsonObject("data");
-        // signFlowId = createByFileData.get("signFlowId").getAsString();
-        // System.err.println("流程id: " + signFlowId);
+        // 发起签署
+        EsignHttpResponse createByFile = createByFile();
+        // JSONObject getPsnAuthUrlObject = JSONObject.parseObject(getPsnAuthUrl.getBody());
+        JsonObject createByFileJsonObject = gson.fromJson(createByFile.getBody(), JsonObject.class);
+        JsonObject createByFileData = createByFileJsonObject.getAsJsonObject("data");
+        signFlowId = createByFileData.get("signFlowId").getAsString();
+        System.err.println("流程id: " + signFlowId);
 
-        //获取合同文件签署链接
+        // 获取合同文件签署链接
         EsignHttpResponse signUrl = signUrl(signFlowId);
         JsonObject signUrlJsonObject = gson.fromJson(signUrl.getBody(), JsonObject.class);
         JsonObject signUrlData = signUrlJsonObject.getAsJsonObject("data");
@@ -44,9 +44,9 @@ public class SignDemo {
         // System.out.println(batchSignUrlJsonObject);
 
         // 开启签署流程
-        // EsignHttpResponse signFlowStart = signFlowStart(signFlowId);
-        // JsonObject signFlowStartJsonObject = gson.fromJson(signFlowStart.getBody(),JsonObject.class);
-        // System.out.println("===1===开启签署流程===1===" + signFlowStartJsonObject);
+        EsignHttpResponse signFlowStart = signFlowStart(signFlowId);
+        JsonObject signFlowStartJsonObject = gson.fromJson(signFlowStart.getBody(),JsonObject.class);
+        System.out.println("===1===开启签署流程===1===" + signFlowStartJsonObject);
 
         // 下载已签署文件及附属材料
         // EsignHttpResponse fileDownloadUrl = fileDownloadUrl(signFlowId);
@@ -60,9 +60,9 @@ public class SignDemo {
         // System.out.println("===2===开启签署流程===2===" + signFlowFinishJsonObject);
 
         // 撤销签署流程
-        EsignHttpResponse signFlowRevoke = signFlowRevoke(signFlowId);
-        JsonObject signFlowRevokeJsonObject = gson.fromJson(signFlowRevoke.getBody(),JsonObject.class);
-        System.out.println(signFlowRevokeJsonObject);
+        // EsignHttpResponse signFlowRevoke = signFlowRevoke(signFlowId);
+        // JsonObject signFlowRevokeJsonObject = gson.fromJson(signFlowRevoke.getBody(),JsonObject.class);
+        // System.out.println(signFlowRevokeJsonObject);
 
         //延期签署截止时间
         // EsignHttpResponse signFlowDelay = signFlowDelay(signFlowId);
@@ -557,7 +557,7 @@ public class SignDemo {
     }
 
     /**
-     * 开启签署流程     *
+     * 开启签署流程
      * @return
      * @param signFlowId
      */
@@ -574,7 +574,7 @@ public class SignDemo {
     }
 
     /**
-     * 下载已签署文件及附属材料     *
+     * 下载已签署文件及附属材料
      * @return
      * @throws EsignDemoException
      */
@@ -629,11 +629,11 @@ public class SignDemo {
                 "    },\n" +
                 "    \"urlType\": 1\n" +
                 "}";
-        //请求方法
+        // 请求方法
         EsignRequestType requestType = EsignRequestType.POST;
-        //生成请求签名鉴权方式的Header
+        // 生成请求签名鉴权方式的Header
         Map<String, String> header = EsignHttpHelper.signAndBuildSignAndJsonHeader(eSignAppId, eSignAppSecret, jsonParm, requestType.name(), apiaddr, true);
-        //发起接口请求
+        // 发起接口请求
         return EsignHttpHelper.doCommHttp(eSignHost, apiaddr, requestType, jsonParm, header, true);
     }
 
